@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 
+:root{
+    --levitarValor: 0;
+    --moveFruitDir: 0;
+}
+
 *{
     padding: 0;
     margin: 0;
@@ -15,10 +20,13 @@ body{
 }
 header{
     position: fixed;
-    top: 0;
+    top: 10px;
+    left: 0;
     z-index: 1;
     font-size: 19px;
     font-weight: bolder;
+    width: 100%;
+    text-align: center;
 }
 
 h1{
@@ -36,7 +44,7 @@ main{
     width: 95vw;
     display: flex;
     justify-content: space-between;
-    z-index: 1;
+    z-index: 2;
 }
 
 .buttons button{
@@ -51,6 +59,7 @@ main{
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease;
+    animation: aura 2s 1s infinite ;
 }
 
 .can{
@@ -59,6 +68,11 @@ main{
     height: 60vh;
     overflow: hidden;
     position: absolute;
+    mask-image: url("images/lata.svg");
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    z-index: 2;
 }
 
 .can img{
@@ -70,4 +84,177 @@ main{
     top: 0;
     left: 0;
     mix-blend-mode: multiply;
+}
+
+.views{
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.3s ease;
+}
+.views section{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.views section h2{
+    font-size: 25vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 1;
+    animation: hideH2 2s infinite;
+}
+
+.views section.background{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    z-index: -2;
+}
+
+.views section .fruits{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.views section .fruits span{
+    position: absolute;
+    transition: all 0.3s ease;
+    z-index: -1;
+    animation: levitarX calc(var(--levitarValor) * 2s) ease-in-out infinite alternate calc(var(--levitarValor) * 100ms),
+    levitarY calc(var(--levitarValor) * 2s) ease-in-out infinite alternate calc( var(--levitarValor) * 500ms),
+    hideFruits 2s ease infinite alternate;
+    animation-composition: add;
+}
+
+.views section .fruits span:nth-child(1){
+    bottom: 2vh;
+    left: 2vw;
+    width: 45vh;
+    --levitarValor: 3;
+    --moveFruitDir: 1;
+}
+
+
+.views section .fruits span:nth-child(2){
+    top: 2vh;
+    left: 10vw;
+    width: 30vh;
+    --levitarValor: 4;
+    --moveFruitDir: -1;
+}
+
+
+.views section .fruits span:nth-child(3){
+    top: 10vh;
+    right: 10vw;
+    width: 23vh;
+    --levitarValor: 1;
+     --moveFruitDir: -1;
+}
+
+.views section .fruits span:nth-child(4){
+    bottom: 2vh;
+    right: 2vw;
+    width: 38vh;
+    --levitarValor: 2;
+     --moveFruitDir: 1; 
+}
+
+.views section .fruits span img{
+    width: 100%;
+    height: 100%;
+}
+
+.views section .fruits span::after{
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    background: linear-gradient(to right, transparent, rgb(0, 0, 0, 0.2), transparent);
+    height: 20px;
+    width: 80%;
+    border-radius: 50%;
+    left: 10%;
+    filter: blur(10px);
+}
+
+@keyframes aura {
+    from{
+        box-shadow:  0 0 0 0 red;
+    }
+    to{
+        box-shadow: 0 0 0 20px transparent;
+    }
+}
+
+@keyframes showH2 {
+    from{
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to{
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes hideH2{
+    from{
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to{
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+}
+
+@keyframes levitarX{
+    from{
+        transform: translateX(calc(var(--levitarValor) * 1vh) );
+    }
+    to{
+        transform: translateX(calc(var(--levitarValor) * -1vh) );
+    }
+}
+
+@keyframes levitarY{
+    from{
+        transform: translateY(calc(var(--levitarValor) * 1vh) );
+    }
+    to{
+        transform: translate(calc(var(--levitarValor) * -1vh) );
+    }
+
+}
+
+@keyframes hideFruits{
+    from{
+        transform: translateY(calc(var(--moveFruitDir) *100vh ));
+    }
+    to{
+         transform: translateY(calc(var(--moveFruitDir) * 100vh ));
+    }
+}
+
+@keyframes showFruits{
+    from{
+        transform: translateX(calc(var(--moveFruitDir) * 100vh));
+    }
+    to{
+        transform: translateX(calc(var(--moveFruitDir) * 100vh));
+    }
 }
